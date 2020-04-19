@@ -1,0 +1,31 @@
+<launch>
+	<node name="guidanceAllCameras" 	type="guidanceAllCameras" pkg="guidance" output="screen" />
+	
+	<param name="down_cam_left_file" 	value="$(find guidance)/calibration_files/0/left.yaml" />
+	<param name="down_cam_right_file" 	value="$(find guidance)/calibration_files/0/right.yaml" />
+	<param name="front_cam_left_file" 	value="$(find guidance)/calibration_files/1/left.yaml" />
+	<param name="front_cam_right_file" 	value="$(find guidance)/calibration_files/1/right.yaml" />
+	<param name="right_cam_left_file" 	value="$(find guidance)/calibration_files/2/left.yaml" />
+	<param name="right_cam_right_file" 	value="$(find guidance)/calibration_files/2/right.yaml" />
+	<param name="back_cam_left_file" 	value="$(find guidance)/calibration_files/3/left.yaml" />
+	<param name="back_cam_right_file" 	value="$(find guidance)/calibration_files/3/right.yaml" />
+	<param name="left_cam_left_file" 	value="$(find guidance)/calibration_files/4/left.yaml" />
+	<param name="left_cam_right_file" 	value="$(find guidance)/calibration_files/4/right.yaml" />
+	
+	<arg name="pi/2" value="1.5707963267948966" />
+	<arg name="pi" value="3.141592654" />
+	
+	
+	<node pkg="tf2_ros" type="static_transform_publisher" name="robot_guidanceFront_link" 	args="0.10 0 -0.10 	-$(arg pi/2) 0 -$(arg pi/2) 	base_link guidanceFront" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="robot_guidanceRight_link" 	args="0 -0.10 -0.10 	  0 $(arg pi) $(arg pi/2) 	base_link guidanceRight" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="robot_guidanceBack_link" 	args="-0.11 0 -0.10 	$(arg pi/2) 0 -$(arg pi/2)	base_link guidanceBack" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="robot_guidanceLeft_link" 	args="0 0.10 -0.10 	0 0 -$(arg pi/2)		base_link guidanceLeft" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="robot_guidanceDown_link" 	args="0.02 0 -0.14 	-$(arg pi/2) 0 -$(arg pi)	base_link guidanceDown" />
+
+	<node name="guidanceDown" 	ns="/guidance/0" pkg="stereo_image_proc" type="stereo_image_proc" output="screen" />
+	<node name="guidanceFront" 	ns="/guidance/1" pkg="stereo_image_proc" type="stereo_image_proc" output="screen" />
+	<node name="guidanceRight" 	ns="/guidance/2" pkg="stereo_image_proc" type="stereo_image_proc" output="screen" />
+	<node name="guidanceBack" 	ns="/guidance/3" pkg="stereo_image_proc" type="stereo_image_proc" output="screen" />
+	<node name="guidanceLeft" 	ns="/guidance/4" pkg="stereo_image_proc" type="stereo_image_proc" output="screen" />
+
+</launch>
